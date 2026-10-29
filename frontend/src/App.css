@@ -1,0 +1,390 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f5f7fb;
+    color: #222;
+}
+
+button,
+input {
+    font: inherit;
+}
+
+.app {
+    min-height: 100vh;
+}
+
+.header {
+    padding: 32px 20px;
+    text-align: center;
+    background: #166534;
+    color: white;
+}
+
+.header h1 {
+    margin: 0 0 10px;
+    font-size: 32px;
+}
+
+.header p {
+    margin: 0;
+    opacity: 0.9;
+}
+
+.container {
+    width: min(1200px, 92%);
+    margin: 32px auto;
+}
+
+.container h2 {
+    margin-bottom: 10px;
+}
+
+.total {
+    color: #555;
+    margin-bottom: 24px;
+}
+
+.food-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+}
+
+.food-card {
+    overflow: hidden;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgb(0 0 0 / 8%);
+    transition: transform 0.2s ease;
+}
+
+.food-card:hover {
+    transform: translateY(-4px);
+}
+
+.food-image {
+    height: 190px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #e5e7eb;
+}
+
+.food-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.food-content {
+    padding: 20px;
+}
+
+.food-id {
+    display: inline-block;
+    padding: 5px 9px;
+    background: #dcfce7;
+    color: #166534;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.food-content h3 {
+    margin: 14px 0;
+    font-size: 21px;
+}
+
+.food-content p {
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+.category {
+    color: #166534;
+}
+
+.description,
+.ingredients {
+    color: #555;
+    font-size: 14px;
+}
+
+.food-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+}
+
+.price {
+    color: #dc2626;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.quantity {
+    color: #555;
+    font-size: 13px;
+}
+
+.message {
+    margin: 50px auto;
+    padding: 20px;
+    text-align: center;
+}
+
+.error {
+    color: #dc2626;
+}
+
+@media (max-width: 900px) {
+    .food-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 600px) {
+    .food-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .header h1 {
+        font-size: 26px;
+    }
+}
+
+.search-container {
+    display: flex;
+    gap: 12px;
+    margin: 20px 0 12px;
+}
+
+.search-input {
+    width: 100%;
+    max-width: 600px;
+    padding: 13px 16px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    outline: none;
+    background: white;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.search-input:focus {
+    border-color: #166534;
+    box-shadow: 0 0 0 3px rgb(22 101 52 / 12%);
+}
+
+.clear-search {
+    padding: 10px 16px;
+    border: none;
+    border-radius: 8px;
+    background: #e5e7eb;
+    cursor: pointer;
+}
+
+.clear-search:hover {
+    background: #d1d5db;
+}
+
+.search-result {
+    margin-bottom: 24px;
+    color: #555;
+    font-size: 14px;
+}
+
+@media (max-width: 600px) {
+    .search-container {
+        flex-direction: column;
+    }
+
+    .search-input {
+        max-width: 100%;
+    }
+}
+
+
+/* Thông báo trạng thái */
+.message {
+    padding: 16px;
+    margin: 16px 0;
+    border-radius: 8px;
+    background: #f3f4f6;
+    color: #333;
+}
+
+.message.error {
+    background: #fee2e2;
+    color: #b91c1c;
+    border: 1px solid #fca5a5;
+}
+
+.message.success {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    background: #dcfce7;
+    color: #166534;
+    border: 1px solid #86efac;
+}
+
+.message.success button {
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    color: inherit;
+    font-size: 16px;
+}
+
+.message.error button {
+    padding: 8px 12px;
+    margin-top: 8px;
+    border: none;
+    border-radius: 5px;
+    background: #b91c1c;
+    color: white;
+    cursor: pointer;
+}
+
+/* Vòng tròn tải dữ liệu */
+.message.loading {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.spinner {
+    width: 20px;
+    height: 20px;
+    border: 3px solid #d1d5db;
+    border-top-color: #2563eb;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    flex-shrink: 0;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.no-image {
+    min-height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f3f4f6;
+    color: #6b7280;
+}
+
+.message {
+    padding: 15px;
+    margin: 15px 0;
+    border-radius: 8px;
+}
+
+.message.error {
+    background-color: #fee2e2;
+    color: #b91c1c;
+    border: 1px solid #fca5a5;
+}
+
+.message.success {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    background-color: #dcfce7;
+    color: #166534;
+    border: 1px solid #86efac;
+}
+
+.message.success button {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.message.loading {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.spinner {
+    width: 20px;
+    height: 20px;
+    border: 3px solid #ddd;
+    border-top-color: #2563eb;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.message {
+    padding: 14px;
+    margin: 15px 0;
+    border-radius: 8px;
+}
+
+.message.loading {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #e0f2fe;
+    color: #075985;
+}
+
+.message.error {
+    background: #fee2e2;
+    color: #b91c1c;
+    border: 1px solid #fca5a5;
+}
+
+.message.success {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    background: #dcfce7;
+    color: #166534;
+    border: 1px solid #86efac;
+}
+
+.message button {
+    cursor: pointer;
+    padding: 6px 10px;
+}
+
+.spinner {
+    width: 20px;
+    height: 20px;
+    border: 3px solid #bae6fd;
+    border-top-color: #0284c7;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    flex-shrink: 0;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
