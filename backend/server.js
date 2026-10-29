@@ -1,6 +1,8 @@
 const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
+const mongoose = require("mongoose");
+const foodRoutes = require("./routes/foodRoutes");
 
 dotenv.config();
 
@@ -25,9 +27,27 @@ app.get("/health", (req, res) => {
     });
 });
 
-// Khởi động máy chủ
+// Đăng ký API món ăn
+app.use("/api/foods", foodRoutes);
+
+// Khởi động máy chủ sau khi kết nối MongoDB
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, "0.0.0.0", () => {
-    console.log(`Server is running on port ${PORT}`);
-});
+async function startServer() {
+    try {
+        await mongoose.connect(process.env.MONGODB_URI, {
+            dbName: "235887_NguyenTranPhuc"
+        });
+
+        console.log("Đã kết nối MongoDB Atlas thành công!");
+
+        app.listen(PORT, "0.0.0.0", () => {
+            console.log(`Server is running on port ${PORT}`);
+        });
+    } catch (error) {
+        console.error("Không thể kết nối MongoDB:", error.message);
+        process.exit(1);
+    }
+}
+
+startServer();
